@@ -13,14 +13,14 @@ dd if=<source> of=<target> bs=<byte size> skip= seek= conv=<conversion>
 # ie, 512, 1024, 2048, 4096, 8192, 16384, but can be ANY reasonable number
 ```
 
-Source is the data being read. Target is where the data gets written. If you
-reverse the source and target, you can wipe out a lot of data. This feature has
-inspired the nickname `dd` Data Destroyer. Caution should be observed when using
-`dd` to copy encrypted partitions.
+* Source is the data being read
+* Target is where the data gets written.
+* If you reverse the source and target, you can wipe out a lot of data. This feature has inspired the nickname `dd` "Data Destroyer".
+* Caution should be observed when using `dd` to copy encrypted partitions.
 
 ## Make swap on a running system
 
-How to make a swap file, or another swap file on a running system:
+How to make a swap file, or another swap file on a running system
 
 ```
 dd if=/dev/zero of=/swapspace bs=4k count=250000
@@ -33,7 +33,7 @@ not easily be rebooted.
 
 ## Size and drives
 
-New How to pick proper block size:
+How to pick proper block size
 
 ```
 time `dd` if=/dev/zero bs=1024 count=1000000 of=/home/sam/1Gb.file
@@ -43,7 +43,7 @@ time `dd` if=/dev/zero bs=8192 count=125000 of=/home/sam/1Gb.file
 ```
 
 This method can also be used as a drive benchmark, to find strengths and
-weaknesses in hard drives:
+weaknesses in hard drives
 
 ```
 time `dd` if=/home/sam/1Gb.file bs=64k | `dd` of=/dev/null
@@ -53,7 +53,8 @@ time `dd` if=/home/sam/1Gb.file bs=64k | `dd` of=/dev/null
 time `dd` if=/dev/zero bs=1024 count=1000000 of=/home/sam/1Gb.file
 ```
 
-The output looks like this:
+The output looks like this
+
 ```
 1000000+0 records in
 1000000+0 records out
@@ -64,19 +65,19 @@ sys 0m25.160s
 ```
 
 Your output may have different figures. The format is what I'm referring to. If
-you play with 'bs=' and 'count=', always having them multiply out to the same
+you play with `bs=` and `count=`, always having them multiply out to the same
 figure, you can calculate bytes/second like this: 1Gb/total seconds = Gb/s. You
 only use the 'real' timing figure from above. You can get more realistic results
 using a 3Gb file.
 
 ## How to rejuvenate a hard drive - _NOT SSDs_
 
-This will sometimes cure input/output errors experienced when using dd. Over
+This will sometimes cure input/output errors experienced when using `dd`. Over
 time the data on a drive, especially a drive that hasn't been used for a year or
 two grows into larger magnetic flux points than were originally recorded. This
 makes it hard for the drive heads to decipher these magnetic flux points. This
 results in read/write errors. Also, sometimes sector 1 goes bad resulting in a
-useless drive. What you need to do is:
+useless drive. What you need to do is
 
 ```
 dd if=/dev/sda of=/dev/sda
@@ -92,20 +93,20 @@ perfectly safe, and saves one a lot of money on HDDs.
 dd if=/dev/sda2 of=/dev/sdb2 bs=4096 conv=notrunc,noerror
 ```
 
-sda2 and sdb2 are partitions. You want to copy sda2 to sdb2. If sdb2 doesn't
-exist, `dd` will start at the beginning of the disk, and create it. Be careful
-with order of if and of. You can write a blank disk to a good disk if you get
-confused. The only difference between a big partition and a small partition,
-besides size, is the partition table. If you are copying sda to sdb, an
-entire drive with a single partition, `sdb` being smaller than `sda`, then
-you have to do:
+`sda2` and `sdb2` are partitions. You want to copy `sda2` to `sdb2`. If `sdb2`
+doesn't exist, `dd` will start at the beginning of the disk, and create it. Be
+careful with order of if and of. You can write a blank disk to a good disk if
+you get confused. The only difference between a big partition and a small
+partition, besides size, is the partition table. If you are copying `sda` to
+`sdb`, an entire drive with a single partition, `sdb` being smaller than `sda`,
+then you have to
 
 ```
 dd if=/dev/sda skip=2 of=/dev/sdb seek=2 bs=4k conv=noerror
 ```
 
-`skip` skips input blocks at the beginning of the media (sda). Seek skips over so
-many blocks on the output media before writing (sdb). By doing this, you leave
+`skip` skips input blocks at the beginning of the media (`sda`). Seek skips over so
+many blocks on the output media before writing (`sdb`). By doing this, you leave
 the first 4k bytes on each drive untouched. You don't want to tell a drive it
 is bigger than it really is by writing a partition table from a larger drive to
 a smaller drive. The first 63 sectors of a drive are empty, except sector 1,
