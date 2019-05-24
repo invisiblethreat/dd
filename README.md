@@ -774,36 +774,44 @@ of=file
 ```
 
 Skip this many blocks in the output file.
+
 ```
 seek=blocks
 ```
 
 Specifies the input block size in n bytes (default is 512).
+
 ```
 ibs=n
 ```
 
 Specifies the output block size in n bytes (default is 512).
+
 ```
 obs=n
 ```
 
 If no conversion other than is specified, each input block is copied to the output as a single block without aggregating short blocks.
+
 ```
 sync, noerror, and, notrunc
 ```
 
 Specifies the conversion block size for block and unblock in bytes by n (default is 0). If cbs= is omitted or given a value of 0, using the following produces unspecified results.
+
 ```
 cbs=n
 ```
 
 This option is used only if ASCII or EBCDIC conversion is specified.
+
 ```
 block or unblock
 ```
 
-operands, the input is handled as described for the unblock operand except that characters are converted to ASCII before the trailing SPACE characters are deleted.
+operands, the input is handled as described for the unblock operand except that characters are converted to ASCII before the trailing SPACE characters are
+deleted.
+
 ```
 ascii and asciib
 ```
